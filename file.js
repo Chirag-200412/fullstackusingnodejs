@@ -36,20 +36,25 @@
 // const read = readFile();
 // console.log(read);
 
-import fs from "fs";
-import path from "path";
+// import fs from "fs";
+// import path from "path";
 
-const filePath = path.join("functions", "sample.js");
-console.log("🚀 ~ filePath:", filePath);
-const absolutePath = path.resolve("/Node JS 6th Sem");
-console.log("🚀 ~ absolutePath:", absolutePath);
+// const filePath = path.join("functions", "sample.js");
+// console.log("🚀 ~ filePath:", filePath);
+// const absolutePath = path.resolve("/Node JS 6th Sem");
+// console.log("🚀 ~ absolutePath:", absolutePath);
 
-const fileDirectory = path.dirname("functions/function.js");
-console.log("🚀 ~ fileDirectory:", fileDirectory);
+// const fileDirectory = path.dirname("functions/function.js");
+// console.log("🚀 ~ fileDirectory:", fileDirectory);
 
-const fileExtention = path.extname("file.js");
-console.log("🚀 ~ fileExtention:", fileExtention);
+// const fileExtention = path.extname("file.js");
+// console.log("🚀 ~ fileExtention:", fileExtention);
 
-fs.readFile(filePath, "utf8", (err, content) => {
-  console.log("🚀 ~ content:", content);
-});
+// fs.readFile(filePath, "utf8", (err, content) => {
+//   console.log("🚀 ~ content:", content);
+// });
+
+import os from "os";
+
+console.log("🚀 ~ Platform:", os.platform());
+console.log("🚀 ~ Platform:", os.arch());
