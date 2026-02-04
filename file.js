@@ -57,4 +57,9 @@
 import os from "os";
 
 console.log("🚀 ~ Platform:", os.platform());
-console.log("🚀 ~ Platform:", os.arch());
+console.log("🚀 ~ arch:", os.arch());
+console.log("🚀 ~ Memory:", os.freemem());
+console.log("🚀 ~ cpu:", os.cpus());
+
+const freeMemoryInGb = os.freemem() / 1024 / 1024 / 1024;
+console.log("🚀 ~ freeMemoryInGb:", freeMemoryInGb);
