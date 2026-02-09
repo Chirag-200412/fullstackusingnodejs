@@ -99,21 +99,28 @@
 // a is executed
 // a is popped
 
-const a = () => {
-  b();
-  console.log("🚀 ~ a ~ a:");
-};
+// const a = () => {
+//   b();
+//   console.log("🚀 ~ a ~ a:");
+//   Promise.resolve().then(() => {
+//     console.log("🚀 ~ a ~ 2nd Promise Portion");
+//   });
+// };
 
-const b = () => {
-  console.log("🚀 ~ b ~ init:");
-  setTimeout(() => {
-    console.log("🚀 ~ b ~ b process:");
-  }, 0);
-  console.log("🚀 ~ b ~ ended");
-};
-a();
+// const b = () => {
+//   console.log("🚀 ~ b ~ init:");
+//   setTimeout(() => {
+//     console.log("🚀 ~ b ~ b process:");
+//   }, 0);
 
-console.log("🚀 ~ ended");
+//   Promise.resolve().then(() => {
+//     console.log("🚀 ~ b ~ Promise Portion");
+//   });
+//   console.log("🚀 ~ b ~ ended");
+// };
+// a();
+
+// console.log("🚀 ~ ended");
 
 // Empty Stack
 
@@ -127,3 +134,30 @@ console.log("🚀 ~ ended");
 // last line is pushed
 // last line is executed
 // last line is popped
+// [first, second, promise]     here promise has highest priority
+
+// This function overloaded the call stack by calling function again and again in infinite loop
+// const crash = () => {
+//   crash();
+// };
+// crash();
+
+const fetchData = (callBack) => {
+  callBack("Data fetched", () => {
+    () => {
+      () => {
+        () => {};
+      };
+    };
+  });
+  //   callBack("Data fetched");
+};
+// fetchData((data) => console.log(data));
+// or
+const add = (data) => console.log(data);
+fetchData(add);
+
+const login = async () => {
+  await authorization();
+  await passwordCheck();
+};
