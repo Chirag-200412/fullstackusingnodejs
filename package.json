@@ -4,11 +4,11 @@
   "description": "sample description",
   "license": "ISC",
   "author": "",
-  "type": "module",
+  "type": "commonjs",
   "main": "file.js",
   "scripts": {
     "start": "node file.js",
-    "dev": "nodemon fileSystem.js"
+    "dev": "nodemon file.js"
   },
   "dependencies": {
     "express": "^5.2.1",

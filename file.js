@@ -54,12 +54,76 @@
 //   console.log("🚀 ~ content:", content);
 // });
 
-import os from "os";
+// import os from "os";
 
-console.log("🚀 ~ Platform:", os.platform());
-console.log("🚀 ~ arch:", os.arch());
-console.log("🚀 ~ Memory:", os.freemem());
-console.log("🚀 ~ cpu:", os.cpus());
+// console.log("🚀 ~ Platform:", os.platform());
+// console.log("🚀 ~ arch:", os.arch());
+// console.log("🚀 ~ Memory:", os.freemem());
+// console.log("🚀 ~ cpu:", os.cpus());
 
-const freeMemoryInGb = os.freemem() / 1024 / 1024 / 1024;
-console.log("🚀 ~ freeMemoryInGb:", freeMemoryInGb);
+// const freeMemoryInGb = os.freemem() / 1024 / 1024 / 1024;
+// console.log("🚀 ~ freeMemoryInGb:", freeMemoryInGb);
+
+// const { add } = require("./utils");
+// const { multi } = require("./utils");
+// console.log("🚀 ~ add:", add(1, 2));
+// console.log("🚀 ~ multi:", multi(5, 6));
+
+// const value = require("./counter");
+// const funInPage2 = require("./newFile");
+
+// Empty Stack
+
+// console.log(`🚀 ~ "1":`, "1");
+
+// console.log(`🚀 ~ "2":`, "2");
+
+// console.log(`🚀 ~ "3":`, "3");
+
+// const a = () => {
+//   b();
+//   console.log("🚀 ~ a ~ a:", a);
+// };
+
+// const b = () => {
+//   console.log("🚀 ~ b ~ b:", b);
+// };
+
+// a();
+
+// Empty Stack
+// a is pushed
+// b is pushed
+// b is executed
+// b is popped
+// a is executed
+// a is popped
+
+const a = () => {
+  b();
+  console.log("🚀 ~ a ~ a:");
+};
+
+const b = () => {
+  console.log("🚀 ~ b ~ init:");
+  setTimeout(() => {
+    console.log("🚀 ~ b ~ b process:");
+  }, 0);
+  console.log("🚀 ~ b ~ ended");
+};
+a();
+
+console.log("🚀 ~ ended");
+
+// Empty Stack
+
+// a is pushed
+// b is pushed
+// b is executed
+// Registering callback
+// b is popped
+// a is executed
+// a is popped
+// last line is pushed
+// last line is executed
+// last line is popped
