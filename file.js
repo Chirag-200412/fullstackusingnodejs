@@ -142,22 +142,89 @@
 // };
 // crash();
 
-const fetchData = (callBack) => {
-  callBack("Data fetched", () => {
-    () => {
-      () => {
-        () => {};
-      };
-    };
-  });
-  //   callBack("Data fetched");
-};
-// fetchData((data) => console.log(data));
-// or
-const add = (data) => console.log(data);
-fetchData(add);
+// const fetchData = (callBack) => {
+//   callBack("Data fetched", () => {
+//     () => {
+//       () => {
+//         () => {};
+//       };
+//     };
+//   });
+//   //   callBack("Data fetched");
+// };
+// // fetchData((data) => console.log(data));
+// // or
+// const add = (data) => console.log(data);
+// fetchData(add);
 
-const login = async () => {
-  await authorization();
-  await passwordCheck();
+// const login = async () => {
+//   await authorization();
+//   await passwordCheck();
+// };
+
+// const fetchData = new Promise((resolve, reject) => {
+//   const success = false;
+//   if (success) {
+//     resolve("Data Fetched");
+//     console.log("🚀 ~ Fetched:", "Data Fetched");
+//   } else {
+//     console.log("🚀 ~ Data Not Fetched:");
+//     reject("Data Not Found");
+//   }
+// });
+
+// fetchData.catch((error) => {
+//   console.log("🚀 ~ error:", error);
+// });
+
+// const login = () => {
+//   return Promise.resolve("Login Success");
+// };
+
+// const getUser = () => {
+//   return Promise.resolve("User Found");
+// };
+
+// const getUserName = () => {
+//   return Promise.resolve("User Name Found");
+// };
+
+// login().then((err, response) => {
+//   if (err) {
+//     console.log("🚀 ~ err:", err);
+//   }
+//   getUser().then(() => {
+//     getUserName().then(() => {
+//       console.log;
+//     });
+//   });
+// });
+
+// or
+
+// login()
+//   .then(getUser)
+//   .then(getUserName)
+//   .then(console.log("All Operations Done"))
+//   .catch((err) => console.log(err));
+
+// // (() => ()) not need to return
+// // (() => {}) need to return the value
+// Promise.resolve(10)
+//   .then((x) => x + 10)
+//   .then((x) => {
+//     return x + 20;
+//   })
+//   .then(console.log);
+
+const sample = async () => {
+  console.log(`🚀 ~ sample ~ "Started":`, "Started");
+  await fetch("https://jsonplaceholder.typicode.com/posts/1")
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+
+  console.log(`🚀 ~ sample ~ "Ended":`, "Ended");
 };
+console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 1");
+sample();
+console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 2");
