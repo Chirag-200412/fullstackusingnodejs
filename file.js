@@ -163,15 +163,21 @@
 // };
 
 // const fetchData = new Promise((resolve, reject) => {
-//   const success = false;
+//   const success = true;
 //   if (success) {
-//     resolve("Data Fetched");
+//     resolve("Data Fetched successfully");
 //     console.log("🚀 ~ Fetched:", "Data Fetched");
 //   } else {
 //     console.log("🚀 ~ Data Not Fetched:");
 //     reject("Data Not Found");
 //   }
-// });
+// })
+//   .then((Success) => {
+//     console.log("🚀 ~ Success:", Success);
+//   })
+//   .catch((error) => {
+//     console.log("🚀 ~ error:", error);
+//   });
 
 // fetchData.catch((error) => {
 //   console.log("🚀 ~ error:", error);
@@ -205,7 +211,7 @@
 // login()
 //   .then(getUser)
 //   .then(getUserName)
-//   .then(console.log("All Operations Done"))
+//   .then(console.log)
 //   .catch((err) => console.log(err));
 
 // // (() => ()) not need to return
@@ -217,14 +223,15 @@
 //   })
 //   .then(console.log);
 
-const sample = async () => {
-  console.log(`🚀 ~ sample ~ "Started":`, "Started");
-  await fetch("https://jsonplaceholder.typicode.com/posts/1")
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+// const sample = async () => {
+//   console.log(`🚀 ~ sample ~ "Started":`, "Started");
+//   await fetch("https://jsonplaceholder.typicode.com/posts/1")
+//     .then((response) => response.json())
+//     .then((json) => console.log(json));
 
-  console.log(`🚀 ~ sample ~ "Ended":`, "Ended");
-};
-console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 1");
-sample();
-console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 2");
+//   console.log(`🚀 ~ sample ~ "Ended":`, "Ended");
+// };
+// console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 1");
+// sample();
+// console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 2");
+
