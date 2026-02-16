@@ -2,13 +2,13 @@ console.log("Start JS");
 for (let i = 0; i <= 5e9; i++) {}
 console.log("Third");
 
-Blocking Code
+// Blocking Code
 console.log("Code");
 for (let i = 0; i <= 10e8; i++) {}
 console.log("Vita");
 console.log("done");
 
-Unblocking Code
+// Unblocking Code
 console.log("Power");
 setTimeout(() => {
   console.log("Toys");
@@ -72,7 +72,7 @@ console.log("🚀 ~ multi:", multi(5, 6));
 const value = require("./counter");
 const funInPage2 = require("./newFile");
 
-Empty Stack
+// Empty Stack
 
 console.log(`🚀 ~ "1":`, "1");
 
@@ -91,13 +91,13 @@ const b = () => {
 
 a();
 
-Empty Stack
-a is pushed
-b is pushed
-b is executed
-b is popped
-a is executed
-a is popped
+// Empty Stack
+// a is pushed
+// b is pushed
+// b is executed
+// b is popped
+// a is executed
+// a is popped
 
 const a = () => {
   b();
@@ -122,21 +122,21 @@ a();
 
 console.log("🚀 ~ ended");
 
-Empty Stack
+// Empty Stack
 
-a is pushed
-b is pushed
-b is executed
-Registering callback
-b is popped
-a is executed
-a is popped
-last line is pushed
-last line is executed
-last line is popped
-[first, second, promise]     here promise has highest priority
+// a is pushed
+// b is pushed
+// b is executed
+// Registering callback
+// b is popped
+// a is executed
+// a is popped
+// last line is pushed
+// last line is executed
+// last line is popped
+// [first, second, promise]     here promise has highest priority
 
-This function overloaded the call stack by calling function again and again in infinite loop
+// This function overloaded the call stack by calling function again and again in infinite loop
 const crash = () => {
   crash();
 };
@@ -234,4 +234,3 @@ const sample = async () => {
 console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 1");
 sample();
 console.log(`🚀 ~ sample ~ "Started":`, "Started ------ 2");
-
