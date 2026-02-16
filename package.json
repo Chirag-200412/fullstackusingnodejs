@@ -7,8 +7,8 @@
   "type": "commonjs",
   "main": "file.js",
   "scripts": {
-    "start": "node file.js",
-    "dev": "nodemon file.js"
+    "start": "node newFile.js",
+    "dev": "nodemon newFile.js"
   },
   "dependencies": {
     "express": "^5.2.1",
