@@ -162,6 +162,7 @@
 //   await passwordCheck();
 // };
 
+// promise means data is not present yet but will be present in future
 // const fetchData = new Promise((resolve, reject) => {
 //   const success = true;
 //   if (success) {
