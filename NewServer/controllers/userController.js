@@ -17,6 +17,7 @@ exports.getUsersById = (req, res) => {
 
 exports.addUsers = (req, res) => {
   const students = req.body;
+  users.push(students);
   console.log("🚀 ~ students:", students);
   res.json({
     message: "Student added",
