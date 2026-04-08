@@ -1,6 +1,6 @@
 const express = require("express");
 
-const mdb = require("./modules/db");
+const mdb = require("./models/db");
 
 const app = express();
 
