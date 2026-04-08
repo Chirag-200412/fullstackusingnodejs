@@ -1,0 +1,804 @@
+# MongoDB Notes
+
+## Table of Contents
+1. [What is MongoDB?](#what-is-mongodb)
+2. [Key Concepts](#key-concepts)
+3. [Installation & Setup](#installation--setup)
+4. [Basic Commands](#basic-commands)
+5. [CRUD Operations](#crud-operations)
+6. [Query Operators](#query-operators)
+7. [Aggregation Pipeline](#aggregation-pipeline)
+8. [Indexing](#indexing)
+9. [Node.js Integration](#nodejs-integration)
+
+---
+
+## What is MongoDB?
+
+MongoDB is a **NoSQL document database** that stores data in flexible, JSON-like documents. It's:
+- **Schema-less**: Documents in the same collection can have different fields
+- **Scalable**: Horizontal scaling through sharding
+- **High-performance**: Supports indexing and aggregation
+
+---
+
+## Key Concepts
+
+| SQL Term | MongoDB Term |
+|----------|-------------|
+| Database | Database |
+| Table | Collection |
+| Row | Document |
+| Column | Field |
+| Primary Key | ObjectId (_id) |
+
+---
+
+## Installation & Setup
+
+### Install MongoDB
+```bash
+# Ubuntu/Debian
+sudo apt-get install mongodb
+
+# macOS (using Homebrew)
+brew install mongodb-community
+
+# Start MongoDB service
+sudo systemctl start mongod  # Linux
+brew services start mongodb-community  # macOS
+
+
+Connect to MongoDB Shell
+bash
+mongosh
+# or for older versions
+mongo
+
+
+
+Basic Commands
+Database Operations
+javascript
+// Show all databases
+show dbs
+
+// Create or switch to database
+use myDatabase
+
+// Check current database
+db
+
+// Drop current database
+db.dropDatabase()
+
+
+
+Collection Operations
+javascript
+// Show collections
+show collections
+
+// Create collection
+db.createCollection("users")
+
+// Drop collection
+db.users.drop()
+
+
+
+javascript
+// Insert single document
+db.users.insertOne({
+    name: "John Doe",
+    email: "john@example.com",
+    age: 25,
+    city: "New York"
+})
+
+// Insert multiple documents
+db.users.insertMany([
+    {
+        name: "Jane Smith",
+        email: "jane@example.com",
+        age: 30,
+        city: "Los Angeles"
+    },
+    {
+        name: "Bob Johnson",
+        email: "bob@example.com",
+        age: 28,
+        city: "Chicago"
+    }
+])
+
+
+
+the I am done on CMD Terminal
+
+
+
+test> show dbs
+Staylio       148.00 KiB
+admin          40.00 KiB
+amazon        108.00 KiB
+ccr-platform   92.00 KiB
+code-review    16.00 KiB
+config         72.00 KiB
+local         100.00 KiB
+relationDemo  256.00 KiB
+test           80.00 KiB
+users          64.00 KiB
+whatsapp       68.00 KiB
+test> use users
+switched to db users
+users> show collections
+users
+users> db.users.find()
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  }
+]
+users> db.users.find({$or:[{isActive:true},{_id:1}]})
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  }
+]
+users> db.users.find({$or:[{isActive:true},{isActive:false}]})
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  }
+]
+users> db.users.find({isActive:true,isActive:false})
+[
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z')
+  }
+]
+users> db.users.updateMany({},{$set:{}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+users> db.users.updateMany({},{$set:{ marks : [{subject:"Maths",Score:80},{subject:}]}})
+Uncaught:
+SyntaxError: Unexpected token (1:76)
+
+> 1 | db.users.updateMany({},{$set:{ marks : [{subject:"Maths",Score:80},{subject:}]}})
+    |                                                                             ^
+  2 |
+
+users>
+
+users> db.users.updateMany({},{$set:{ marks : [{subject:"Maths",Score:80},{subject:"CSE",Score:70},{subject:"NODE",Score:60}]}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+users> db.users.find()
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'Maths', Score: 80 },
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 }
+    ]
+  },
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'Maths', Score: 80 },
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 }
+    ]
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'Maths', Score: 80 },
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 }
+    ]
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'Maths', Score: 80 },
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 }
+    ]
+  }
+]
+users> db.users
+| .updateOne(
+|   { _id: 4 },
+|   {
+|     $push: {
+|       marks: { subject: "DBMS", Score: 85 }
+|     }
+|   }
+| )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+users> db.users. updateOne( { _id: 3 }, { $push: { marks: { subject: "DBMS", Score: 85 } } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+users> db.users. updateOne( { _id: 2 }, { $push: { marks: { subject: "DBMS", Score: 85 } } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+users> db.users. updateOne( { _id: 1 }, { $push: { marks: { subject: "DBMS", Score: 85 } } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+users> db.users. updateOne( {  }, { $pull: { marks: { subject: "Maths"} } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+users> db.users.find()
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'Maths', Score: 80 },
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'Maths', Score: 80 },
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'Maths', Score: 80 },
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  }
+]
+users> db.users. updateMany( {  }, { $pull: { marks: { subject: "Maths"} } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+users> db.users.find()
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  }
+]
+users> db.users.updateMany({_id:1,"marks.subject":"NODE"},{$set:{"marks.$.Score":90}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+users> db.users.find()
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 90 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 60 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  }
+]
+users> db.users.updateMany({"marks.subject":"NODE"},{$set:{"marks.$.Score":90}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+users> db.users.find()
+[
+  {
+    _id: 1,
+    name: 'Abhishek',
+    age: 23,
+    course: 'B.Tech',
+    skills: [ 'JavaScript', 'React', 'MongoDB' ],
+    address: { city: 'Delhi', pincode: 110001 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 90 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 2,
+    name: 'Priya',
+    age: 24,
+    course: 'MBA',
+    skills: [ 'Excel', 'Finance' ],
+    address: { city: 'Mumbai', pincode: 400001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 90 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 3,
+    name: 'Rahul',
+    age: 21,
+    course: 'BCA',
+    skills: [ 'Python', 'Flask' ],
+    address: { city: 'Bangalore', pincode: 560001 },
+    isActive: false,
+    status: 'active',
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 90 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  },
+  {
+    _id: 4,
+    name: 'Sneha',
+    age: 24,
+    course: 'B.Tech',
+    skills: [
+      'Java',
+      'Spring',
+      'React',
+      'React',
+      'flask',
+      'Docker',
+      'Kubernetes',
+      'MongoDB'
+    ],
+    address: { city: 'Hyderabad (India)', pincode: 500002 },
+    isActive: true,
+    status: 'active',
+    graduated: false,
+    updatedAt: ISODate('2026-04-03T10:09:04.439Z'),
+    marks: [
+      { subject: 'CSE', Score: 70 },
+      { subject: 'NODE', Score: 90 },
+      { subject: 'DBMS', Score: 85 }
+    ]
+  }
+]
