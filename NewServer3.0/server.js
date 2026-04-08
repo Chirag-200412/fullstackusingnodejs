@@ -1,11 +1,11 @@
 const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
 
-mongoose
-  .connect("mongodb://localhost:27017/secE")
-  .then(() => console.log("Connected to DB"))
-  .catch((err) => console.log(err));
+const mdb = require("./modules/db");
+
+const app = express();
+
+// Initialize DB
+mdb();
 
 app.get("/", (req, res) => {
   res.send("Hi from backend");
