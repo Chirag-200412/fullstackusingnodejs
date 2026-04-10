@@ -16,6 +16,19 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRoutes);
 
-app.listen(8080, () => {
-  console.log("Server is listening on http://localhost:8080/");
+app.use((req, res, next) => {
+  if (req.url.startsWith("/gla/students")) {
+    req.url = req.url.replace("/gla/students", "");
+  }
+  next();
+});
+
+app.get("/year/:year/section/:section", (req, res) => {
+  const { year, section } = req.params;
+
+  res.send(`/year/${year}/section/${section}`);
+});
+
+app.listen(3000, () => {
+  console.log("Server is listening on http://localhost:3000/");
 });
