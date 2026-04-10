@@ -19,7 +19,6 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  console.log("BODY:", req.body);
   try {
     const user = new User(req.body);
     const savedUser = await user.save();
